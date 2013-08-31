@@ -25,10 +25,26 @@ Humain::Humain(){
 	Immobile_vector.push_back(Immobile3);
 	Immobile_vector.push_back(Immobile4);
 
+	Animation tampon;
+	gauche["Immobile"] = tampon;
+	gauche["Deplacement"] = tampon;
+	gauche["Saut"] = tampon;
 
-	Animations["Immobile"] = new Animation(Immobile_vector, 300);
-	Animations["Gauche"] = new Animation();
-	Animations["Droite"] = new Animation();
+	gauche["Jambes_Immobile"] = tampon;
+	gauche["Jambes_Deplacement"] = tampon;
+	//etc..
+
+	//tampon.setInvert(largeur);
+	droite["Immobile"] = tampon;
+	droite["Deplacement"] = tampon;
+	droite["Saut"] = tampon;
+
+	gauche["Jambes_Immobile"] = tampon;
+	gauche["Jambes_Deplacement"] = tampon;
+	
+	//Animations["Immobile"] = new Animation(Immobile_vector, 300);
+	//Animations["Gauche"] = new Animation();
+	//Animations["Droite"] = new Animation();
 
 	canFly = false;
 	texture.loadFromFile("C:/Users/Lucas/Documents/Visual Studio 2012/Projects/Metal slug/Metal slug/Debug/SpriteSheet.png");
@@ -36,15 +52,7 @@ Humain::Humain(){
 }
 
 void Humain::inactif(){
-	SpriteSheet.setTextureRect(Animations["Immobile"]->loop());
-	std::cout<<"Top :"<<SpriteSheet.getTextureRect().top<<std::endl;
-	std::cout<<"Left :"<<SpriteSheet.getTextureRect().left<<std::endl;
-	std::cout<<"Height :"<<SpriteSheet.getTextureRect().height<<std::endl;
-	std::cout<<"Width :"<<SpriteSheet.getTextureRect().width<<std::endl;
-	std::cout<<std::endl;
-	std::cout<<Animations["Immobile"]->get_img_animation();
-	std::cout<<std::endl;
-	std::cout<<std::endl;
+	/*SpriteSheet.setTextureRect(Animations["Immobile"]->loop());*/
 
 }
 

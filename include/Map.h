@@ -37,4 +37,6 @@ public:
 	sf::Vector2f getTile(sf::Vector2f position);
 	//Retourne le tile s'il y a collision
 	Tile* collision(sf::IntRect boundingBox);
+	//Retourne la largeur de la map
+	int getLargeur();
 };

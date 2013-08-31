@@ -111,3 +111,7 @@ Tile* Map::collision(sf::IntRect boundingBox) {
 
 	return NULL;
 }
+
+int Map::getLargeur() {
+	return largeur;
+}

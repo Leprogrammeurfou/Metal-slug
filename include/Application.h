@@ -1,19 +1,18 @@
-//Tu es là ?
+#pragma once
 #include <SFML\Graphics.hpp>
+#include "MainApplication.h"
+
+class MainApplication;
 
 class Application {
-private:
-	//La fenêtre de l'application,
-	sf::RenderWindow* fenetre;
 public:
-	//Le constructeur
-	Application();
-	//La fonction gérant les évènements
-	void event(sf::Event& event);
-	//La fonction définissant un tour de boucle de l'application
-	void loop();
-	//La fonction permettant de démarrer l'application
-	int start();
-	//Le destructeur !
-	~Application();
+	//L'application principale
+	static MainApplication* main_app;
+
+	//La fonction qui initialise l'application
+	virtual void init() = 0;
+	//La fonction qui recevra les évènements
+	virtual void event(sf::Event& _event) = 0;
+	//La boucle
+	virtual void loop() = 0;
 };

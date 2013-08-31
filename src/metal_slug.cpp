@@ -1,12 +1,18 @@
 // metal_slug.cpp : définit le point d'entrée pour l'application console.
 //
 
-#include "Application.h"
+#include "MainApplication.h"
+#include "Game.h"
 
 int main()
 {
-	//Le main très court
-	Application app;
-	return app.start();
+	//On met le jeu comme application en cours
+	Application::main_app->changerApplication(new Game());
+	//On démarre l'application principale
+	int result = Application::main_app->start();
+	//On supprime l'application principal
+	delete Application::main_app;
+	//On retourne le résultat
+	return result;
 }
 

@@ -1,3 +1,4 @@
+#pragma once
 #include <SFML\Graphics.hpp>
 #include "Map.h"
 #include "Parser.h"

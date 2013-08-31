@@ -11,7 +11,7 @@ void Parser::loads(std::string contenu) {
 			supprimer = !supprimer;
 
 		//Si on peut supprimer et que le caractère est interdit on supprime
-		if((supprimer && contenu[i] != ' ' && contenu[i] != '\r' && contenu[i] != '\n') || (!supprimer && contenu[i] != '"'))
+		if(((supprimer && contenu[i] != ' ' && contenu[i] != '\r' && contenu[i] != '\n') || !supprimer) && contenu[i]	!= '"')
 			contenuFinal += contenu[i];
 	}
 
@@ -54,7 +54,8 @@ std::vector < std::string > Parser::explode(char delimiteur,std::string chaine) 
 		}
 	}
 
-	tableau.push_back(chaine_en_cours);
+	if(chaine_en_cours != "")
+		tableau.push_back(chaine_en_cours);
 	return tableau;
 }
 

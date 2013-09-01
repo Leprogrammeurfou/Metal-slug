@@ -1,5 +1,8 @@
 #pragma once
 #include "Application.h"
+#include "MenuPause.h"
+
+class MenuPause;
 
 //Le jeu
 class Game : public Application {

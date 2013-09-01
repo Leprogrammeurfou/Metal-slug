@@ -2,12 +2,12 @@
 //
 
 #include "MainApplication.h"
-#include "Game.h"
+#include "MainMenu.h"
 
 int main()
 {
 	//On met le jeu comme application en cours
-	Application::main_app->changerApplication(new Game());
+	Application::main_app->changerApplication(new MainMenu());
 	//On démarre l'application principale
 	int result = Application::main_app->start();
 	//On supprime l'application principal

@@ -53,7 +53,7 @@ bool Niveau::defiler(sf::IntRect& boundingBox) {
 	if(boundingBox.left + boundingBox.width > current->getLargeur()) {
 		//Ca dépasse ? on passe à la map suivante
 		id_current += 1;
-		if(id_current < maps.size())
+		if(id_current < (int) maps.size())
 			chargerCarte();
 
 		return true;

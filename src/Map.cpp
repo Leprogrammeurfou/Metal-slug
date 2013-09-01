@@ -1,7 +1,7 @@
 #include "Map.h"
 
 bool in_array(std::string recherche,std::vector < std::string > tableau) {
-	for (int i = 0;i < tableau.size();i++)
+	for (unsigned int i = 0;i < tableau.size();i++)
 		if(tableau[i] == recherche)
 			return true;
 
@@ -20,8 +20,8 @@ bool Tile::isObstacle() {
 }
 
 bool Tile::collision(sf::IntRect boundingBox) {
-	sf::IntRect myBoundingBox = sf::IntRect(getPosition().x,
-		getPosition().y,getTextureRect().width,getTextureRect().height);
+	sf::IntRect myBoundingBox = sf::IntRect((int) getPosition().x,
+		(int) getPosition().y,getTextureRect().width,getTextureRect().height);
 
 	return myBoundingBox.left + myBoundingBox.width > boundingBox.left && 
 		myBoundingBox.left < boundingBox.left + boundingBox.width && 
@@ -64,8 +64,8 @@ void Map::charger(Parser& parser) {
 			Tile sprite;
 			sprite.setTexture(tileset);
 			//Découpage du tileset
-			sprite.setTextureRect(sf::IntRect((position_x) * largeur_tile,(position_y) * hauteur_tile,largeur_tile,hauteur_tile));
-			sprite.setPosition(x * largeur_tile,y * hauteur_tile);
+			sprite.setTextureRect(sf::IntRect((position_x) * largeur_tile,((int) position_y) * hauteur_tile,largeur_tile,hauteur_tile));
+			sprite.setPosition((float) x * largeur_tile,(float) y * hauteur_tile);
 
 			//Si c'est un obstacle, nous le signalons
 			if(obstacle)
@@ -79,26 +79,26 @@ void Map::charger(Parser& parser) {
 }
 
 void Map::afficher(sf::RenderWindow& app) {
-	for(int i = 0;i < tableau.size();i++) {
-		for(int j = 0;j < tableau[i].size();j++) {
+	for(unsigned int i = 0;i < tableau.size();i++) {
+		for(unsigned int j = 0;j < tableau[i].size();j++) {
 			app.draw(tableau[i][j]);
 		}
 	}
 }
 
 sf::Vector2f Map::getTile(sf::Vector2f position) {
-	int x = position.x/largeur_tile, y = position.y/hauteur_tile;
+	float x = position.x/largeur_tile, y = position.y/hauteur_tile;
 	return sf::Vector2f(x,y);
 }
 
 Tile* Map::collision(sf::IntRect boundingBox) {
-	sf::Vector2f tile = getTile(sf::Vector2f(boundingBox.left,boundingBox.top));
-	for(int j = -1;j < 2;j++) {
-		for(int i = -1;i < 2;i++) {
+	sf::Vector2i tile(getTile(sf::Vector2f((float) boundingBox.left,(float) boundingBox.top)));
+	for(unsigned int j = -1;j < 2;j++) {
+		for(unsigned int i = -1;i < 2;i++) {
 			int x = tile.x + i,y = tile.y + j;
 			std::cout << x << ", "<< y << std::endl;
 			//Si la position existe
-			if(y >= 0 && y < tableau.size() && x >= 0 && y < tableau[y].size()) {
+			if(y >= 0 && y < (int) tableau.size() && x >= 0 && y < (int) tableau[y].size()) {
 
 				//Si c'est un obstacle et en collision
 				if(tableau[y][x].isObstacle()) {

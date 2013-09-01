@@ -1,9 +1,11 @@
 #include "MainApplication.h"
 
+Application* MainApplication::current = NULL;
+sf::RenderWindow* MainApplication::fenetre = NULL;
+
 MainApplication::MainApplication() {
 	fenetre = new sf::RenderWindow(sf::VideoMode(800,600),"");
 	fenetre->setFramerateLimit(60);
-	current = NULL;
 }
 
 int MainApplication::start() {
@@ -18,6 +20,7 @@ int MainApplication::start() {
 			else if(current != NULL)
 				current->event(evenement);
 		}
+		fenetre->clear();
 		//On appelle la boucle de l'application en cours
 		if(current != NULL)
 			current->loop();		

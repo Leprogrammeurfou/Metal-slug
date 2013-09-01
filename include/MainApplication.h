@@ -9,13 +9,13 @@ class Application;
 class MainApplication {
 public:
 	//La fenêtre de l'application,
-	sf::RenderWindow* fenetre;
+	static sf::RenderWindow* fenetre;
 
 	//L'application actuelle
-	Application *current;
+	static Application *current;
 
 	//Changer l'application, prend en premier paramètre l'application, en deuxième un booleen indiquant si l'on souhaite supprimer l'application en cours
-	void changerApplication(Application* app,bool supprimer = true);
+	static void changerApplication(Application* app,bool supprimer = true);
 
 	//Le constructeur
 	MainApplication();

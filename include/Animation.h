@@ -14,8 +14,7 @@ private:
 	sf::Clock clock;
 	sf::Time elapsed;
 
-	bool inverted;
-
+	std::string myName;
 	unsigned int img_width;
 public:
 	// \Default constructor
@@ -23,6 +22,7 @@ public:
 	// \New image to the animation each time.
 	Animation(std::vector<sf::IntRect> boxes, unsigned int delay_);
 
+	Animation(std::vector<sf::IntRect> boxes, unsigned int delay_,std::string name);
 	// \Add a vector of bounding box for the animations (add the animations at the end)
 	void addAnimations(std::vector<sf::IntRect> boxes);
 	void setDelay(int delay_);
@@ -47,8 +47,8 @@ public:
 	void to_zero();
 
 	sf::IntRect invert(sf::IntRect old_box);
-	void setInvert(unsigned int image_width);
 
+	void invertAll(unsigned int image_width);
 	/*TEMP*/
 	// \get the variable img_animation
 	int get_img_animation(){return this->img_animation;}

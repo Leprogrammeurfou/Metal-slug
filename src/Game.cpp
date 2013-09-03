@@ -11,4 +11,7 @@ void Game::event(sf::Event& _event) {
 
 void Game::loop() {
 	niveau.afficher(*MainApplication::fenetre);
+
+	E.inactif(E.return_this());
+	E.render(MainApplication::fenetre);
 }

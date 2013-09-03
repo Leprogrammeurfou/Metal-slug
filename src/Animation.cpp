@@ -6,8 +6,6 @@ Animation::Animation(){
 	on_pause = false;
 	delay = NULL;
 	img_width = NULL;
-
-	inverted = false;
 }
 
 Animation::Animation(std::vector<sf::IntRect> boxes, unsigned int delay_){
@@ -20,6 +18,19 @@ Animation::Animation(std::vector<sf::IntRect> boxes, unsigned int delay_){
 	nb_images = bounding_boxes.size();
 	delay = delay_;
 	sf::Clock clock;
+}
+
+Animation::Animation(std::vector<sf::IntRect> boxes, unsigned int delay_, std::string name){
+	img_animation = 0;
+
+	for(unsigned int i=0;i<boxes.size();i++){
+		bounding_boxes.push_back(boxes.at(i));
+	}
+
+	nb_images = bounding_boxes.size();
+	delay = delay_;
+	sf::Clock clock;
+	myName = name;
 }
 
 void Animation::addAnimations(std::vector<sf::IntRect> boxes){
@@ -35,19 +46,12 @@ void Animation::setDelay(int delay_){
 }
 
 sf::IntRect& Animation::get_bounding_box(){
-	if(!inverted){
 	return bounding_boxes.at(img_animation);
-	}
-
-	return invert(bounding_boxes.at(img_animation));
+	
 }
 
 sf::IntRect& Animation::get_bounding_box(int number){
-	if(!inverted){
 		return bounding_boxes.at(number);
-	}
-		return invert(bounding_boxes.at(number));
-	
 }
 
 void Animation::new_frame(){
@@ -96,8 +100,9 @@ sf::IntRect Animation::invert(sf::IntRect old_box){
 	return temp;
 }
 
-void Animation::setInvert(unsigned int image_width){
-	inverted = true;
+void Animation::invertAll(unsigned int image_width){
 	this->img_width = image_width;
+	for(int i=0;i<nb_images;i++){
+		bounding_boxes[i] = this->invert(bounding_boxes[i]);
+	}
 }
-

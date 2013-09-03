@@ -1,6 +1,7 @@
 #pragma once
 #include "Application.h"
 #include "MenuPause.h"
+#include "Ennemi.h"
 
 class MenuPause;
 
@@ -8,6 +9,7 @@ class MenuPause;
 class Game : public Application {
 private:
 	Niveau niveau;
+	Ennemi E;
 public:
 	//Initialiser le jeu
 	void init();

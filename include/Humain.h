@@ -1,25 +1,33 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Animation.h"
 #include <map>
 #include <iostream>
-#include "Animation.h"
 
 class Humain{
-private: 
-	std::map < std::string, Animation > gauche;
-	std::map < std::string, Animation > droite;
+protected: 
+	std::map <std::string, std::map<std::string,Animation>> PrimarySprite;
 	sf::Vector2f coords;
-	bool canFly;//Le personnage est-il sensible à la gravité ?
+	int canFly;//Le personnage est-il sensible à la gravité ?
 	sf::Sprite SpriteSheet;
 	sf::Texture texture;
+	int jumpForce;
 public:
-	//Ajouter args comme type de perso pour charger la feuille de sprites
 	Humain();
 	//Animation de l'inactivité pouvant être coupée par le déplacement, le saut, etc.
-	void inactif();
+	void inactif(Humain*);
 	//Animation du déplacement
-	void deplacement();
+	void move(Humain*);
+	//Saut
+	void jump(Humain*);
 	//Rendu de l'humain
-	void render(sf::RenderWindow* window);
-	//Aujouter le saut et la gravité
+	virtual void render(sf::RenderWindow* window);
+	//Modifier la sensibilité à la gravité
+	virtual void setGravity(int G);
+
+	virtual void playInactifAnimation(unsigned int side) = 0;
+	virtual void playMoveAnimation(unsigned int side) = 0;
+	virtual void playJumpAnimation(unsigned int side) = 0;
+
+	Humain* return_this();
 };

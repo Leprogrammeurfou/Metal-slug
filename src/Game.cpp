@@ -1,7 +1,9 @@
 #include "Game.h"
 void Game::init() {
 	niveau.init("niveau.txt");
-	E.init("Rebel_Soldier.png");
+	E.init("Rebel_Soldier.png", 1);
+
+
 }
 
 void Game::event(sf::Event& _event) {
@@ -14,6 +16,7 @@ void Game::loop() {
 	niveau.afficher(*MainApplication::fenetre);
 
 	
-	E.inactif(1);
+
+	E.move(0);//Un nombre pair = course à droite
 	E.render(MainApplication::fenetre);
 }

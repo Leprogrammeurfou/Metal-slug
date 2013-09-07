@@ -32,7 +32,7 @@ public:
 	void addAnimations(std::vector<sf::IntRect> boxes);
 	void setDelay(int delay_);
 
-	// \get the bounding box from the current img_animation
+	// \brief get the bounding box from the current img_animation
 	sf::IntRect& get_bounding_box();
 	// \get the bounding box from a number
 	sf::IntRect& get_bounding_box(int number);

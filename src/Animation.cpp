@@ -71,7 +71,7 @@ void Animation::setDelay(int delay_){
 }
 
 sf::IntRect& Animation::get_bounding_box(){
-	std::cout<<" "<<img_animation;
+	//std::cout<<" "<<img_animation;
 	return bounding_boxes.at(img_animation);
 
 }
@@ -158,15 +158,18 @@ sf::IntRect Animation::invert(sf::IntRect old_box){
 void Animation::invertAll(unsigned int image_width){
 	this->img_width = image_width;
 	for(int i=0;i<nb_images;i++){
-		bounding_boxes[i] = this->invert(bounding_boxes[i]);
+		bounding_boxes[i].left = this->invert(bounding_boxes[i]).left;
 	}
 
 	std::vector<sf::IntRect> tableau;
-	for(int i = tableau.size()-1;i >= 0;i--){
+	for(int i = 0;i <= bounding_boxes.size()-1;i++){
 		tableau.push_back(bounding_boxes.at(i));
 	}
 
+
 	bounding_boxes = tableau;
+
+	bounding_boxes;
 }
 
 

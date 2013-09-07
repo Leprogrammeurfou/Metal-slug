@@ -7,11 +7,11 @@ private:
 
 public:
 	Ennemi();
-	Ennemi(std::string imgsrc);
+	Ennemi(std::string imgsrc, unsigned int base_side_);
 
-	void init(std::string imgsrc);
+	void init(std::string imgsrc, unsigned int base_side_);
 
-	void move();
+	//void move();
 
 	sf::IntRect playInactifAnimation(unsigned int side);
 	sf::IntRect playMoveAnimation(unsigned int side);

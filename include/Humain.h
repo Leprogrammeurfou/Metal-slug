@@ -14,20 +14,27 @@ protected:
 	int jumpForce;
 public:
 	Humain();
+	Humain(std::string imgsrc);
+
+	virtual void init(std::string imgsrc);
 	//Animation de l'inactivité pouvant être coupée par le déplacement, le saut, etc.
-	void inactif(Humain*);
+	void inactif(unsigned int side);
 	//Animation du déplacement
-	void move(Humain*);
+	void move(unsigned int side);
 	//Saut
-	void jump(Humain*);
+	void jump(unsigned int side);
 	//Rendu de l'humain
 	virtual void render(sf::RenderWindow* window);
 	//Modifier la sensibilité à la gravité
 	virtual void setGravity(int G);
 
-	virtual void playInactifAnimation(unsigned int side) = 0;
-	virtual void playMoveAnimation(unsigned int side) = 0;
-	virtual void playJumpAnimation(unsigned int side) = 0;
+	virtual sf::IntRect playInactifAnimation(unsigned int side) = 0;
+	virtual sf::IntRect playMoveAnimation(unsigned int side) = 0;
+	virtual sf::IntRect playJumpAnimation(unsigned int side) = 0;
+
+	sf::IntRect playAnyAnimation(Animation* Animation, unsigned int side);
+
+	void setTexture(std::string imgsrc);
 
 	Humain* return_this();
 };

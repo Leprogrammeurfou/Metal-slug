@@ -5,46 +5,99 @@ Ennemi::Ennemi() : Humain(){
 
 	sf::IntRect I1(2,5,27,38);
 	sf::IntRect I2(38,5,27,38);
-	sf::IntRect I3(74,5,27,38);	
+	sf::IntRect I3(75,5,27,38);	
 	sf::IntRect I4(107,5,27,38);
 	std::vector <sf::IntRect> I;
-	Animation Inactif(I,300,"NAME");
-
-	Animation Inactif2(I,300);
+	I.push_back(I1);
+	I.push_back(I2);
+	I.push_back(I3);
+	I.push_back(I4);
+	Animation Inactif(I,100,"NAME",1);
+	Inactif.switch_animation_type();
+	Animation Inactif2(I,300,1);
 
 	PrimarySprite["Gauche"]["Inactif"] = Inactif;
-
-	PrimarySprite["Gauche"]["Inactif"].addAnimations(I);
 
 	PrimarySprite["Gauche"]["Move"] = Inactif2;
 
 	PrimarySprite["Gauche"]["Jump"] = Inactif2;
 }
 
+Ennemi::Ennemi(std::string imgsrc) : Humain(imgsrc){
 
-void Ennemi::playInactifAnimation(unsigned int side){
-	if(side%2==0){
-		PrimarySprite["Droite"]["Inactif"].loop();
-	}else{
-		PrimarySprite["Gauche"]["Inactif"].loop();
-	}
+	sf::IntRect I1(2,5,27,38);
+	sf::IntRect I2(38,5,27,38);
+	sf::IntRect I3(75,5,27,38);	
+	sf::IntRect I4(107,5,27,38);
+	std::vector <sf::IntRect> I;
+	I.push_back(I1);
+	I.push_back(I2);
+	I.push_back(I3);
+	I.push_back(I4);
+	Animation Inactif(I,100,"NAME",1);
+	Inactif.switch_animation_type();
+	texture.getSize().x;
+	Inactif.invertAll(texture.getSize().x);
+	Animation Inactif2(I,300,1);
 
-	for (auto& x: PrimarySprite) {
-    std::cout << x.first << ": ";
-  }
+	PrimarySprite["Gauche"]["Inactif"] = Inactif;
+
+	PrimarySprite["Gauche"]["Move"] = Inactif2;
+
+	PrimarySprite["Gauche"]["Jump"] = Inactif2;
+}
+
+void Ennemi::init(std::string imgsrc){
+	std::map<std::string,Animation> tampon;
+	PrimarySprite["Droite"] = tampon;
+	PrimarySprite["Gauche"] = tampon;
+
+
+	canFly = -11;
 	
+	texture.loadFromFile(imgsrc);
+	SpriteSheet.setTexture(texture);
+
+	sf::IntRect I1(2,5,27,38);
+	sf::IntRect I2(38,5,27,38);
+	sf::IntRect I3(75,5,27,38);	
+	sf::IntRect I4(107,5,27,38);
+	std::vector <sf::IntRect> I;
+	I.push_back(I1);
+	I.push_back(I2);
+	I.push_back(I3);
+	I.push_back(I4);
+	Animation Inactif(I,100,"NAME",1);
+	Inactif.switch_animation_type();
+	sf::Vector2f u(texture.getSize().x, 5);
+	Inactif.invertAll(texture.getSize().x);
+	Animation Inactif2(I,300,1);
+
+	PrimarySprite["Gauche"]["Inactif"] = Inactif;
+
+	PrimarySprite["Gauche"]["Move"] = Inactif2;
+
+	PrimarySprite["Gauche"]["Jump"] = Inactif2;
 }
-void Ennemi::playMoveAnimation(unsigned int side){
+
+sf::IntRect Ennemi::playInactifAnimation(unsigned int side){
 	if(side%2==0){
-		PrimarySprite["Droite"]["Move"].loop();
+		return PrimarySprite["Droite"]["Inactif"].loop();
 	}else{
-		PrimarySprite["Gauche"]["Move"].loop();
+		return PrimarySprite["Gauche"]["Inactif"].loop();
+	}	
+}
+sf::IntRect Ennemi::playMoveAnimation(unsigned int side){
+	if(side%2==0){
+		return PrimarySprite["Droite"]["Move"].loop();
+	}else{
+		return PrimarySprite["Gauche"]["Move"].loop();
 	}
 }
-void Ennemi::playJumpAnimation(unsigned int side){
+sf::IntRect Ennemi::playJumpAnimation(unsigned int side){
 	if(side%2==0){
-		PrimarySprite["Gauche"]["Jump"].loop();
+		return PrimarySprite["Gauche"]["Jump"].loop();
 	}else{
-		PrimarySprite["Gauche"]["Jump"].loop();
+		return PrimarySprite["Gauche"]["Jump"].loop();
 	}
 }

@@ -7,25 +7,45 @@ Humain::Humain(){
 	PrimarySprite["Droite"] = tampon;
 	PrimarySprite["Gauche"] = tampon;
 
-
 	canFly = -11;
-	texture.loadFromFile("C:/Users/Lucas/Documents/Metal-slug-sources/medias/Rebel_Soldier.png");
 	SpriteSheet.setTexture(texture);
 }
 
-void Humain::inactif(Humain*H){
-	this->playInactifAnimation(1);
+Humain::Humain(std::string imgsrc){
+	std::map<std::string,Animation> tampon;
+	PrimarySprite["Droite"] = tampon;
+	PrimarySprite["Gauche"] = tampon;
+
+	canFly = -11;
+	
+	texture.loadFromFile(imgsrc);
+	SpriteSheet.setTexture(texture);
 }
-void Humain::move(Humain*H){
-	H->playMoveAnimation(0);
+
+void Humain::init(std::string imgsrc){
+	std::map<std::string,Animation> tampon;
+	PrimarySprite["Droite"] = tampon;
+	PrimarySprite["Gauche"] = tampon;
+
+	canFly = -11;
+	
+	texture.loadFromFile(imgsrc);
+	SpriteSheet.setTexture(texture);
+}
+
+void Humain::inactif(unsigned int side){
+	SpriteSheet.setTextureRect(this->playInactifAnimation(side));
+}
+void Humain::move(unsigned int side){
+	this->playMoveAnimation(side);
 	std::cout<<"Hey ! Je suis un humain, et je bouge";
 }
-void Humain::jump(Humain*H){
-	this->playJumpAnimation(0);
+void Humain::jump(unsigned int side){
+	this->playJumpAnimation(side);
 }
 
 void Humain::setGravity(int G){
-
+	canFly = G;
 }
 
 void Humain::render(sf::RenderWindow* window){
@@ -33,4 +53,13 @@ void Humain::render(sf::RenderWindow* window){
 }
 Humain* Humain::return_this(){
 	return this;
+}
+
+void Humain::setTexture(std::string imgsrc){
+	texture.loadFromFile(imgsrc);
+	SpriteSheet.setTexture(texture);
+}
+
+sf::IntRect Humain::playAnyAnimation(Animation* Animation, unsigned int side){
+	return Animation->loop();
 }

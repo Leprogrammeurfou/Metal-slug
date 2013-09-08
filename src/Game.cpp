@@ -1,8 +1,10 @@
 #include "Game.h"
 void Game::init() {
+	
+	Parser parser;
+	parser.loads("nom : \"Alpha le bg de ouf; qui tue tout\";age : 18");
+	std::cout << parser.get("nom") << std::endl;
 	niveau.init("niveau.txt");
-	E.init("Rebel_Soldier.png", 1);
-
 
 }
 
@@ -13,10 +15,12 @@ void Game::event(sf::Event& _event) {
 }
 
 void Game::loop() {
-	niveau.afficher(*MainApplication::fenetre);
-
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		humain.move("gauche");
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		humain.move("droite");
+	humain.update();
 	
-
-	E.move(0);//Un nombre pair = course à droite
-	E.render(MainApplication::fenetre);
+	niveau.afficher(*MainApplication::fenetre);
+	humain.render(MainApplication::fenetre);
 }

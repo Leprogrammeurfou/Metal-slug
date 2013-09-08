@@ -1,0 +1,44 @@
+<!DOCTYPE SpriteDecomposer>
+<sprites image="11227.png" transparentColor="">
+ <animation title="haut.immobile" delay="150">
+  <cut w="29" x="12" y="8" h="29" row="1" col="1"/>
+  <cut w="29" x="45" y="8" h="29" row="1" col="1"/>
+  <cut w="30" x="78" y="8" h="28" row="1" col="1"/>
+  <cut w="31" x="112" y="9" h="27" row="1" col="1"/>
+ </animation>
+ <animation title="bas.immobile" delay="150">
+  <cut w="21" x="160" y="1501" h="16" row="1" col="1"/>
+  <cut w="21" x="184" y="1501" h="16" row="1" col="1"/>
+  <cut w="21" x="208" y="1501" h="16" row="1" col="1"/>
+  <cut w="21" x="232" y="1501" h="16" row="1" col="1"/>
+ </animation>
+ <animation title="haut.deplacement" delay="150">
+  <cut w="30" x="47" y="148" h="29" row="1" col="1"/>
+  <cut w="28" x="79" y="148" h="28" row="1" col="1"/>
+  <cut w="32" x="13" y="149" h="28" row="1" col="1"/>
+  <cut w="27" x="109" y="149" h="27" row="1" col="1"/>
+  <cut w="29" x="139" y="149" h="28" row="1" col="1"/>
+  <cut w="30" x="171" y="149" h="28" row="1" col="1"/>
+  <cut w="32" x="204" y="149" h="29" row="1" col="1"/>
+  <cut w="32" x="239" y="149" h="29" row="1" col="1"/>
+  <cut w="32" x="274" y="149" h="28" row="1" col="1"/>
+  <cut w="31" x="308" y="149" h="27" row="1" col="1"/>
+  <cut w="31" x="342" y="149" h="28" row="1" col="1"/>
+  <cut w="31" x="376" y="149" h="28" row="1" col="1"/>
+ </animation>
+ <animation title="bas.deplacement" delay="150">
+  <cut w="21" x="260" y="1497" h="20" row="1" col="1"/>
+  <cut w="28" x="284" y="1497" h="20" row="1" col="1"/>
+  <cut w="31" x="315" y="1497" h="16" row="1" col="1"/>
+  <cut w="19" x="349" y="1497" h="20" row="1" col="1"/>
+  <cut w="15" x="371" y="1497" h="20" row="1" col="1"/>
+  <cut w="16" x="389" y="1497" h="20" row="1" col="1"/>
+  <cut w="21" x="408" y="1497" h="20" row="1" col="1"/>
+  <cut w="26" x="432" y="1497" h="20" row="1" col="1"/>
+  <cut w="31" x="461" y="1497" h="16" row="1" col="1"/>
+  <cut w="20" x="495" y="1497" h="20" row="1" col="1"/>
+  <cut w="15" x="517" y="1497" h="20" row="1" col="1"/>
+  <cut w="18" x="534" y="1497" h="20" row="1" col="1"/>
+  <cut w="2" x="555" y="1510" h="3" row="1" col="1"/>
+ </animation>
+</sprites>

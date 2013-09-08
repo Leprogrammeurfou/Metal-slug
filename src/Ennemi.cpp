@@ -108,7 +108,7 @@ void Ennemi::init(std::string imgsrc, unsigned int base_side){
 
 	PrimarySprite["Gauche"]["Inactif"] = Inactif;
 
-	sf::IntRect M1(2,49,27,38);
+	sf::IntRect(2,49,27,38);
 	sf::IntRect M2(36,49,27,38);
 	sf::IntRect M3(71,47,27,40);
 	sf::IntRect M4(103,47,27,40);
@@ -145,25 +145,6 @@ void Ennemi::init(std::string imgsrc, unsigned int base_side){
 
 	PrimarySprite["Gauche"]["Jump"] = Inactif2;
 }
-
-sf::IntRect Ennemi::playInactifAnimation(unsigned int side){
-	if(side%2==0){
-		return PrimarySprite["Droite"]["Inactif"].loop();
-	}else{
-		return PrimarySprite["Gauche"]["Inactif"].loop();
-	}	
-}
-sf::IntRect Ennemi::playMoveAnimation(unsigned int side){
-	if(side%2==0){
-		return PrimarySprite["Droite"]["Move"].loop();
-	}else{
-		return PrimarySprite["Gauche"]["Move"].loop();
-	}
-}
-sf::IntRect Ennemi::playJumpAnimation(unsigned int side){
-	if(side%2==0){
-		return PrimarySprite["Gauche"]["Jump"].loop();
-	}else{
-		return PrimarySprite["Gauche"]["Jump"].loop();
-	}
-}
+ 
+void playAnimation(std::string name) {
+	this->anima

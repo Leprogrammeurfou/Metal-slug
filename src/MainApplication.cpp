@@ -20,6 +20,7 @@ int MainApplication::start() {
 			else if(current != NULL)
 				current->event(evenement);
 		}
+		
 		fenetre->clear();
 		//On appelle la boucle de l'application en cours
 		if(current != NULL)

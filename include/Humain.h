@@ -1,46 +1,43 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
+#include "Parser.h"
 #include <map>
 #include <iostream>
 
 class Humain{
-protected: 
-	std::map <std::string, std::map<std::string,Animation>> PrimarySprite;
-	sf::Vector2f coords;
-	int canFly;//Le personnage est-il sensible à la gravité ?
-	sf::Sprite SpriteSheet;
-	sf::Image Base;
-	sf::Image Base_inverted;
-	sf::Texture texture;
-	int jumpForce;
-	
-	unsigned int base_side;
+protected:
+	//Se déplace t-il ?
+	bool isMoving, stopMoving;
+	//La position du joueur
+	sf::Vector2f position;
+	//Les images
+	sf::Image imageGauche,imageDroite;
+	//La feuille de sprite
+	std::map < std::string, sf::Texture > texture;
+	/*
+	 * Animations de la forme ["haut"]["direction"]["nom_animation"]
+	 */
+	std::map < std::string, std::map < std::string,std::map < std::string,Animation* > > > animations;
+	/*
+	 * La liste des sprites de l'humain
+	 */
+	std::map < std::string, sf::Sprite > sprites;
+	//Le nom de l'animation en cours ainsi que la direction
+	std::string animationName,side;
 public:
+	//Le constructeur de l'humain
 	Humain();
-	Humain(std::string imgsrc, unsigned int base_side_);
-
-	virtual void init(std::string imgsrc, unsigned int base_side_);
-	//Animation de l'inactivité pouvant être coupée par le déplacement, le saut, etc.
-	void inactif(unsigned int side);
-	//Animation du déplacement
-	void move(unsigned int side);
-	//Saut
-	void jump(unsigned int side);
-	//Rendu de l'humain
-	virtual void render(sf::RenderWindow* window);
-	//Modifier la sensibilité à la gravité
-	virtual void setGravity(int G);
-
-	virtual sf::IntRect playInactifAnimation(unsigned int side) = 0;
-	virtual sf::IntRect playMoveAnimation(unsigned int side) = 0;
-	virtual sf::IntRect playJumpAnimation(unsigned int side) = 0;
-
-	sf::IntRect playAnyAnimation(Animation* Animation, unsigned int side);
-
-	virtual void setSide(unsigned int side);
-
-	void setTexture(std::string imgsrc);
-
-	Humain* return_this();
+	//Met à jour l'humain
+	void update();
+	//Affiche l'humain
+	void render(sf::RenderWindow* app);
+	//Le déplacement
+	void move(std::string direction);
+	//Changer les coordonées du/des sprites
+	virtual void coords(int x,int y);
+	//Joue l'animation en cours
+	void playAnimation();
+	//Le destructeur
+	~Humain();
 };

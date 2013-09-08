@@ -2,6 +2,8 @@
 #include <SFML\Graphics.hpp>
 #include <vector>
 #include <iostream>
+#include "Parser.h"
+
 class Animation{
 private:
 	std::vector<sf::IntRect> bounding_boxes;
@@ -24,6 +26,7 @@ private:
 public:
 	// \Default constructor
 	Animation();
+	Animation(std::string, unsigned int delay);
 	// \New image to the animation each time.
 	Animation(std::vector<sf::IntRect> boxes, unsigned int delay_, unsigned int side_);
 

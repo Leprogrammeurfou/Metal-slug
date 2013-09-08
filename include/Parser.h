@@ -20,7 +20,7 @@ public:
 	//Retourne l'élément qui a pour identifiant l'identifiant fourni en le convertissant en un entier
 	int geti(std::string identifiant);
 	//Permet d'exploser une chaine de caractère suivant un certain délimiteur
-	static std::vector < std::string > explode(char delimiteur,std::string chaine);
+	static std::vector < std::string > explode(char delimiteur,std::string chaine,bool supprimer = true);
 	//Transforme une chaine en un entier
 	static int stringToInt(std::string chaine);
 };

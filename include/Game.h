@@ -9,7 +9,7 @@ class MenuPause;
 class Game : public Application {
 private:
 	Niveau niveau;
-	Ennemi E;
+	Humain humain;
 public:
 	//Initialiser le jeu
 	void init();

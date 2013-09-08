@@ -1,5 +1,19 @@
 #include "Animation.h"
 
+Animation::Animation(std::string cuts,unsigned int _delay) {
+	delay = _delay;
+	img_animation = 0;
+	on_pause = false;
+	std::vector < std::string > intrects = Parser::explode('|',cuts);
+	for(unsigned int i = 0;i < intrects.size();i++) {
+		std::vector < std::string > infos = Parser::explode(',',intrects[i]);
+		bounding_boxes.push_back(sf::IntRect(Parser::stringToInt(infos[0]),Parser::stringToInt(infos[1]),
+			Parser::stringToInt(infos[2]),Parser::stringToInt(infos[3])));
+	}
+
+	nb_images = bounding_boxes.size();
+}
+
 Animation::Animation(){
 	//Constructeur par défault
 	img_animation = 0;
@@ -86,47 +100,18 @@ void Animation::new_frame(){
 
 	//unsigned int T=elapsed.asMilliseconds();
 	if(elapsed.asMilliseconds() > delay){
-		if(Animation_type == 0){
-			if(img_animation<nb_images - 1){
-				if(!on_pause){
-					img_animation++;
-					clock.restart();
-				}
-				else{
-					std::cout<<"Pause, gros"<<std::endl;
-				}
-			}
-			else{
-				img_animation = 0;
+		if(img_animation<nb_images - 1){
+			if(!on_pause){
+				img_animation++;
 				clock.restart();
 			}
+			else{
+				std::cout<<"Pause, gros"<<std::endl;
+			}
 		}
-		else if(Animation_type == 1){
-			if(!able){//AVANCER JUSQU'AU MAX
-				if(!on_pause){
-					img_animation++;
-					clock.restart();
-					if(img_animation == nb_images -1){
-						able = true;
-					}
-				}
-			}
-			else{ //RECULER JUSQU'A 0
-				if(!on_pause){
-					if(img_animation != 0){					
-					img_animation--;
-					clock.restart();
-					}
-					else{
-						img_animation++;
-					clock.restart();
-						able = false;
-					}
-				}
-			}
-
-
-			
+		else{
+			img_animation = 0;
+			clock.restart();
 		}
 	}
 }

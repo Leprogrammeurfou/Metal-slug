@@ -1,19 +1,19 @@
 #pragma once
+#define DROITE 1
+#define GAUCHE 2
 #include "Humain.h"
 #include <iostream>
 
 class Ennemi : public Humain{
 private:
-
+	sf::Sprite first,second;
+	std::map <unsigned int,std::map < std::string,Animation > > animations;
 public:
 	Ennemi();
 	Ennemi(std::string imgsrc, unsigned int base_side_);
 
 	void init(std::string imgsrc, unsigned int base_side_);
 
-	//void move();
-
-	sf::IntRect playInactifAnimation(unsigned int side);
-	sf::IntRect playMoveAnimation(unsigned int side);
-	sf::IntRect playJumpAnimation(unsigned int side);
+	void render(sf::RenderWindow* app);
+	void playAnimation(std::string name);
 };

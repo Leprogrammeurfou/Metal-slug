@@ -11,7 +11,7 @@ void Parser::loads(std::string contenu) {
 			supprimer = !supprimer;
 
 		//Si on peut supprimer et que le caractère est interdit on supprime
-		if(((supprimer && contenu[i] != ' ' && contenu[i] != '\r' && contenu[i] != '\n') || !supprimer) && contenu[i]	!= '"')
+		if(((supprimer && contenu[i] != ' ' && contenu[i] != '\r' && contenu[i] != '\n') || !supprimer))
 			contenuFinal += contenu[i];
 	}
 
@@ -23,7 +23,7 @@ void Parser::loads(std::string contenu) {
 	//On vide le tableau des elements
 	elements.clear();
 
-	std::vector < std::string > paires = Parser::explode(';',contenuFinal);
+	std::vector < std::string > paires = Parser::explode(';',contenuFinal,false);
 	for(size_t i = 0;i < paires.size();i++) {
 		std::vector < std::string > ensemble = Parser::explode(':',paires[i]);
 		elements.push_back(std::pair<std::string,std::string>(ensemble[0],ensemble[1]));
@@ -42,16 +42,22 @@ void Parser::loadFile(std::string nom) {
 	loads(contenu);
 }
 
-std::vector < std::string > Parser::explode(char delimiteur,std::string chaine) {
+std::vector < std::string > Parser::explode(char delimiteur,std::string chaine,bool supprimer) {
 	std::vector < std::string > tableau;
 	std::string chaine_en_cours;
+	bool enregistrer = true;
 	for(size_t i = 0;i < chaine.size();i++) {
-		if(delimiteur != chaine[i])
+		if(chaine[i] == '"')
+			enregistrer = !enregistrer;
+
+		if((delimiteur != chaine[i] || !enregistrer) && (!supprimer || chaine[i] != '"'))
 			chaine_en_cours += chaine[i];
-		else {
+		else if(enregistrer && delimiteur == chaine[i]) {
 			tableau.push_back(chaine_en_cours);
 			chaine_en_cours = "";
 		}
+
+		
 	}
 
 	if(chaine_en_cours != "")

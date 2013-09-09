@@ -1,12 +1,8 @@
 #include "Humain.h"
 
-Humain::Humain(){
-	isMoving = false;
-	stopMoving = false;
-	side = "droite";
-	animationName = "immobile";
-
-    //Ok gros, on charge les animations tranquilou
+void Humain::init(){
+	side =  "droite";
+	//Ok gros, on charge les animations tranquilou
 	Parser parser;
 	parser.loadFile("animations.txt");
 	imageDroite.loadFromFile(parser.get("image"));
@@ -31,6 +27,15 @@ Humain::Humain(){
 		sprite.setTexture(texture[side]);
 		sprites[animation.first] = sprite;
 	}
+
+	isMoving = false;
+	isJumping = false;
+	stopMoving = false;
+	position.x = 0;
+	position.y = 0;
+
+	sauter(true);
+
 }
 
 void Humain::move(std::string direction) {
@@ -41,12 +46,14 @@ void Humain::move(std::string direction) {
 				sprite.second.setTexture(texture[direction]);
 
 		side = direction;
-		animationName = "deplacement";
+		if(!isJumping)
+			changerAnimation("deplacement");
 		isMoving = true;
 	}
 
 	stopMoving = false;
 }
+
 void Humain::playAnimation() {
 	//Ok donc pour chaque sprite on run l'animation
 	for(auto ensembles:animations) {
@@ -55,9 +62,12 @@ void Humain::playAnimation() {
 }
 
 void Humain::update() {
+	sf::IntRect boundingBox = getBoundingBox();
+	//S'il bouge il bouge
 	if(isMoving) {
 		if(stopMoving) {
-			animationName = "immobile";
+			if(!isJumping)
+				changerAnimation("immobile");
 			isMoving = false;
 		}
 		else {
@@ -66,11 +76,62 @@ void Humain::update() {
 				position.x += 1;
 			else
 				position.x -= 1;
+
+			Tile* tile = niveau->collision(getBoundingBox());
+			//Bon on mate les collisions
+			if(tile != NULL) {
+				if(side == "droite")
+					position.x = tile->getPosition().x - boundingBox.width;
+				else
+					position.x = tile->getPosition().x + tile->getTextureRect().width;
+			}
+
+			//S'il ne saute pas on mate les collisions avec le sol
+			if(!isJumping) {
+				boundingBox = getBoundingBox();
+				boundingBox.top += 1;
+				Tile* tile = niveau->collision(boundingBox);
+				//Pas de collisions ? bon ben on tombe l'ami
+				if(tile == NULL)
+					sauter(true);
+			}
+
+			
 		}
 	}
+
+	//S'il saute cousin on le fait sauter
+	if(isJumping) {
+		position.y += gravity;
+
+		//Ok, on mate s'il y a collision
+		Tile* tile = niveau->collision(getBoundingBox());
+		if(tile != NULL) {
+			//Si on monte, on se cogne et on tombe
+			if(gravity <= 0) {
+				position.y = tile->getPosition().y + tile->getTextureRect().height;
+				gravity = 0;
+			}
+			else {
+				//On stoppe le saut gros
+				
+				boundingBox = getBoundingBox();
+				position.y = tile->getPosition().y - boundingBox.height;
+				isJumping = false;
+				changerAnimation(isMoving ? "deplacement":"immobile");
+			}
+		}
+		gravity += 0.2;
+
+	}
+	
 	//On met à jour l'animation
 	playAnimation();
 	coords(position.x,position.y);
+}
+
+void Humain::setNiveau(Niveau* lvl) {
+	niveau = lvl;
 }
 
 void Humain::render(sf::RenderWindow* app) {
@@ -79,8 +140,50 @@ void Humain::render(sf::RenderWindow* app) {
 		app->draw(sprite.second);
 }
 
+void Humain::changerAnimation(std::string animation) {
+	animationName = animation;
+	playAnimation();
+	coords(position.x,position.y);
+	//Nous récupérons également le sprite le plus gros
+	int largeur_max = 0;
+	for(auto &sprite:sprites) {
+		if(sprite.second.getTextureRect().width > largeur_max) {
+			largeur_max = sprite.second.getTextureRect().width;
+		}
+	}
+
+	//On change la bounding box, mine de rien
+	size.x = largeur_max;
+	//On recalibre le joueur s'il y a collision en x
+	Tile* tile = niveau->collision(getBoundingBox());
+	if(tile != NULL) {
+		if(side == "droite")
+			position.x = tile->getPosition().x - size.x;
+		else
+			position.x = tile->getPosition().x + tile->getTextureRect().width;
+	}
+	int ancienneHauteur = size.y;
+	size.y = hauteur;
+	//S'il y a collision en y, on recalibre également
+	tile = niveau->collision(getBoundingBox());
+	if(tile != NULL) {
+		position.y = tile->getPosition().y - size.y;
+	}
+
+	//On mate s'il touche le sol quand même
+	if(!isJumping) {
+			sf::IntRect boundingBox = getBoundingBox();
+			boundingBox.top += 1;
+			Tile* tile = niveau->collision(boundingBox);
+			//Pas de collisions ? bon ben on te met bien
+			if(tile == NULL)
+				position.y += ancienneHauteur - size.y;
+	}
+}
+
 void Humain::coords(int x,int y) {
 	bool start = true;
+	hauteur = y;
 	for(auto &sprite:sprites) {
 		if(side != "gauche" || start) {
 			sprite.second.setPosition(x,y);
@@ -91,7 +194,19 @@ void Humain::coords(int x,int y) {
 		}
 		if(side == "gauche")
 			x += sprite.second.getTextureRect().width;
-		y += sprite.second.getTextureRect().height - 7;
+		y += sprite.second.getTextureRect().height;
+	}
+
+	hauteur = y - hauteur;
+}
+
+void Humain::sauter(bool tomber) {
+	if(!isJumping) {
+		isJumping = true;
+		if(!tomber)
+			gravity = INITIAL;
+		else gravity = 0;
+		changerAnimation("saut");
 	}
 }
 
@@ -103,4 +218,8 @@ Humain::~Humain() {
 			}
 		}
 	}
+}
+
+sf::IntRect Humain::getBoundingBox() {
+	return sf::IntRect(position.x,position.y,size.x,size.y);
 }

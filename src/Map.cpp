@@ -92,11 +92,11 @@ sf::Vector2f Map::getTile(sf::Vector2f position) {
 }
 
 Tile* Map::collision(sf::IntRect boundingBox) {
-	sf::Vector2i tile(getTile(sf::Vector2f((float) boundingBox.left,(float) boundingBox.top)));
-	for(unsigned int j = -1;j < 2;j++) {
-		for(unsigned int i = -1;i < 2;i++) {
+	sf::Vector2i tile(getTile(sf::Vector2f((float) boundingBox.left + boundingBox.width/2,(float) boundingBox.top + 
+		boundingBox.height/2)));
+	for(int j = -1;j < 2;j++) {
+		for(int i = -1;i < 2;i++) {
 			int x = tile.x + i,y = tile.y + j;
-			std::cout << x << ", "<< y << std::endl;
 			//Si la position existe
 			if(y >= 0 && y < (int) tableau.size() && x >= 0 && y < (int) tableau[y].size()) {
 

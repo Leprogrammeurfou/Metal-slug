@@ -5,6 +5,9 @@ void Game::init() {
 	parser.loads("nom : \"Alpha le bg de ouf; qui tue tout\";age : 18");
 	std::cout << parser.get("nom") << std::endl;
 	niveau.init("niveau.txt");
+	//On donne l'environnement au joueur
+	humain.setNiveau(&niveau);
+	humain.init();
 
 }
 
@@ -19,6 +22,10 @@ void Game::loop() {
 		humain.move("gauche");
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		humain.move("droite");
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		humain.sauter();
+
+
 	humain.update();
 	
 	niveau.afficher(*MainApplication::fenetre);

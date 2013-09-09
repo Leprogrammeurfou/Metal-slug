@@ -32,6 +32,8 @@ void Niveau::chargerCarte() {
 	//Ok on se contente de charger la map
 	current = new Map();
 	current->charger(maps[id_current]);
+	largeur = current->largeur;
+	hauteur = current->hauteur;
 }
 
 bool Niveau::afficher(sf::RenderWindow& app) {

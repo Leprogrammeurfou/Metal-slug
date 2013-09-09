@@ -8,6 +8,8 @@
 
 class Humain{
 protected:
+	//La vitesse
+	int speed;
 	//Se déplace t-il, saute t-il ?
 	bool isMoving, stopMoving, isJumping;
 	//Le niveau
@@ -18,10 +20,8 @@ protected:
 	int hauteur;
 	//La position ainsi que la taille du joueur
 	sf::Vector2f position, size;
-	//Les images
-	sf::Image imageGauche,imageDroite;
 	//La feuille de sprite
-	std::map < std::string, sf::Texture > texture;
+	std::map < std::string, sf::Texture* > texture;
 	/*
 	 * Animations de la forme ["haut"]["direction"]["nom_animation"]
 	 */
@@ -34,7 +34,7 @@ protected:
 	std::string animationName,side;
 public:
 	//Le constructeur de l'humain
-	void init();
+	void init(sf::Texture* textureGauche, sf::Texture* textureDroite, Parser& parser,int vitesse);
 	//Met à jour l'humain
 	void update();
 	//Affiche l'humain

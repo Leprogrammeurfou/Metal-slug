@@ -1,15 +1,17 @@
 #pragma once
 #include "Application.h"
 #include "MenuPause.h"
-#include "Ennemi.h"
+#include "Joueur.h"
 
 class MenuPause;
 
 //Le jeu
 class Game : public Application {
 private:
+	//La caméra
+	sf::View camera;
 	Niveau niveau;
-	Humain humain;
+	Joueur* joueur;
 public:
 	//Initialiser le jeu
 	void init();

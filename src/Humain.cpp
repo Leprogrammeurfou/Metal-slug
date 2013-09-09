@@ -1,15 +1,10 @@
 #include "Humain.h"
 
-void Humain::init(){
+void Humain::init(sf::Texture* textureGauche, sf::Texture* textureDroite, Parser& parser, int vitesse) {
+	speed = vitesse;
 	side =  "droite";
-	//Ok gros, on charge les animations tranquilou
-	Parser parser;
-	parser.loadFile("animations.txt");
-	imageDroite.loadFromFile(parser.get("image"));
-	imageGauche = imageDroite;
-	imageGauche.flipHorizontally();
-	texture["droite"].loadFromImage(imageDroite);
-	texture["gauche"].loadFromImage(imageGauche);
+	texture["droite"] = textureDroite;
+	texture["gauche"] = textureGauche;
 	std::vector < std::string > anims = Parser::explode('-',parser.get("animations"));
 	for(unsigned int i = 0;i < anims.size();i++) {
 		//Donc on charge chaque animation :p
@@ -18,13 +13,13 @@ void Humain::init(){
 		std::vector < std::string > nom = Parser::explode('.',animation.get("nom"));
 		animations[nom[0]]["droite"][nom[1]] = new Animation(animation.get("cuts"),animation.geti("delay"));
 		animations[nom[0]]["gauche"][nom[1]] = new Animation(animation.get("cuts"),animation.geti("delay"));
-		animations[nom[0]]["gauche"][nom[1]]->invertAll(texture["droite"].getSize().x);
+		animations[nom[0]]["gauche"][nom[1]]->invertAll(texture["droite"]->getSize().x);
 	}
-	
+
 	//Pfiou les animations sont chargées, on crée les sprites
 	for(auto &animation:animations) {
 		sf::Sprite sprite;
-		sprite.setTexture(texture[side]);
+		sprite.setTexture(*texture[side]);
 		sprites[animation.first] = sprite;
 	}
 
@@ -43,7 +38,7 @@ void Humain::move(std::string direction) {
 		//On change la direction ?
 		if(side != direction)
 			for(auto &sprite:sprites)
-				sprite.second.setTexture(texture[direction]);
+				sprite.second.setTexture(*texture[direction]);
 
 		side = direction;
 		if(!isJumping)
@@ -73,9 +68,9 @@ void Humain::update() {
 		else {
 			stopMoving = true;
 			if(side == "droite")
-				position.x += 1;
+				position.x += speed;
 			else
-				position.x -= 1;
+				position.x -= speed;
 
 			Tile* tile = niveau->collision(getBoundingBox());
 			//Bon on mate les collisions
@@ -157,7 +152,7 @@ void Humain::changerAnimation(std::string animation) {
 	//On recalibre le joueur s'il y a collision en x
 	Tile* tile = niveau->collision(getBoundingBox());
 	if(tile != NULL) {
-		if(side == "droite")
+		if(position.x < tile->getPosition().x)
 			position.x = tile->getPosition().x - size.x;
 		else
 			position.x = tile->getPosition().x + tile->getTextureRect().width;

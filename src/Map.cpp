@@ -98,7 +98,7 @@ Tile* Map::collision(sf::IntRect boundingBox) {
 		for(int i = -1;i < 2;i++) {
 			int x = tile.x + i,y = tile.y + j;
 			//Si la position existe
-			if(y >= 0 && y < (int) tableau.size() && x >= 0 && y < (int) tableau[y].size()) {
+			if(y >= 0 && y < (int) tableau.size() && x >= 0 && x < (int) tableau[y].size()) {
 
 				//Si c'est un obstacle et en collision
 				if(tableau[y][x].isObstacle()) {

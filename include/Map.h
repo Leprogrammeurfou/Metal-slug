@@ -27,8 +27,9 @@ private:
 	//le nom de la map
 	std::string nom;
 	//la largeur, la hauteur de la map, la largeur d'un tile, la hauteur d'un tile
-	int largeur, hauteur, largeur_tile, hauteur_tile,nombre_tiles_largeur,nombre_tiles_hauteur;
+	int largeur_tile, hauteur_tile,nombre_tiles_largeur,nombre_tiles_hauteur;
 public:
+	int largeur, hauteur;
 	//Charger la map
 	void charger(Parser& parser);
 	//Afficher la map

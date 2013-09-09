@@ -14,6 +14,8 @@ private:
 	//L'identifiant de la carte en cours
 	int id_current;
 public:
+	//La largeur, la hauteur
+	int largeur, hauteur;
 	//Initialiser le niveau, prend en paramètres le nom du fichier
 	void init(std::string filename);
 	//Affiche le niveau, retourne false si le niveau n'a plus de maps à afficher, en gros s'il est terminé.
